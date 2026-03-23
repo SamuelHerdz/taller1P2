@@ -8,7 +8,7 @@ actor Paciente
 rectangle "Sistema de Gestión Hospitalaria" {
     Recepcionista --> (Registrar Paciente)
     Recepcionista --> (Registar Alergia)
-    Recepcionista --> (Consultar Historial)
+    Recepcionista --> (Consultar Historial Médico)
     Recepcionista --> (Agendar Cita)
     Recepcionista --> (Confirmar Cita)
     Medico --> (Registrar Diagnóstico)
@@ -16,16 +16,16 @@ rectangle "Sistema de Gestión Hospitalaria" {
     Medico --> (Marcar Cita En Atención)
     Medico --> (Marcar Cita Atendida)
     Administrador --> (Gestionar Personal)
-    Administrador --> (Gestionar Turnos
+    Administrador --> (Gestionar Turnos)
     Administrador --> (Generar Reportes)
     Administrador --> (Asignar Salario Base)
     Paciente --> (Solicitar Cita)
     Paciente --> (Consultar Resultados de Exámenes)
-    Paciente --> (Consultar Historial)
+    Paciente --> (Consultar Historial Médico)
     Paciente --> (Cancelar Cita)
     
     (Agendar Cita) .> (Validar Disponibilidad Medico) : <<include>>
-    (Registrar Diagnóstico) .> (Actualizar Historial) : <<include>>
+    (Registrar Diagnóstico) .> (Actualizar Historial Médico) : <<include>>
     (Registrar Receta) .> (Actualizar Historial) : <<include>>
 
     note right of (Agendar Cita)
