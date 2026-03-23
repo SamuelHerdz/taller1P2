@@ -1,19 +1,142 @@
 @startuml 
-' Paquetes
+skinparam classAttributeIconSize 0
+
 package modelo.abstractas {
     abstract class Persona {
         - Long id 
         - String nombre
         - String apellido
         - String email
-        - String telefono
         - LocalDate fechaNacimiento
         + int calcularEdad()
         + String obtenerTipo()
         }
 
         abstract class Empleado {
-            
+         - String legajo
+         - LocalDate fechaContratacion
+         - double salarioBase
+         - boolean activo
+         + abstract double calcularSalario()
+         + int antiguedad()
         }
-        )
     }
+
+    package modelo.personas {
+        class Paciente {
+         - String hisotiraClinicaID
+         - String grupoSanguineo
+         - List<String> alergias
+         - List<String> contraindicaciones
+         - List<CitaMedica> citas
+         + void agregarAlergia(String)
+         + void agregarContraindicacion(String)
+         + List<CitaMedica> obtenerHistorial()
+        }
+        
+        class Medico {
+            - String numeroLicencia
+            - Especialidad especialidad
+            - List<Paciente> pacientesAsignados
+            - List<CitaMedica> citasAtendidas
+            + void atenderPaciente(Paciente)
+            + double calcularSalario()
+            + String obtenerTipo
+        }
+        
+        class Cirujano {
+            - int cirugiasRealizadas
+            - boolean dispobileEmergencias
+            + void realizarCirugia()
+            + double calcularBono()
+            + double calcularSalario()
+            + String obtenertipo()
+        }
+        
+         class Enfermero {
+            - Turno turno
+            - String areaAsignada
+            - List<Paciente> pacientesACargo
+            + void asistirCirugia()
+            + double calcularSalario
+            + String obtenerTipo()
+        }
+     }
+
+        package modelo.hospital {
+          class Hospital {
+            - String nombre
+            - String direccion
+            - List<Empleado> empleados
+            - List<Paciente> pacientes
+            - List<CitaMedica> citas
+            + void contratarEmpleado(Empleado)
+            + boolean agendarCita(CitaMedica)
+            + double calcularNominaTotal()
+          }
+        
+          class CitaMedica {
+            - Long id
+            - Paciente paciente
+            - Medico medico
+            - LocalDateTime fechaHora
+            - String motivo
+            - EstadoCita estado
+            - double costo
+            - Diagnostico diagnostico
+            + double calcularCosto()
+            + void completar()
+            + void cancelar()
+        }
+
+        class Especialidad {
+            - String codigo
+            - String nombre
+            - String descripcion
+            - double costoConsulta
+            + getters/setters
+          }
+        
+          class Diagnostico {
+            - Long id
+            - String descripcion
+            - String receta
+            - LocalDate fecha
+            - Medico medico
+            + getters/setters
+          }
+        }
+        
+        package modelo.enums {
+          enum EstadoCita { PENDIENTE, CONFIRMADA, EN_ATENCION, COMPLETADA, CANCELADA }
+          enum Turno { MANANA, TARDE, NOCHE }
+        }
+
+        ' Herencia
+        Persona <|-- Empleado
+        Empleado <|-- Medico
+        Medico <|-- Cirujano
+        Empleado <|-- Enfermero
+        
+        ' Composicion/Agregacion
+        Hospital *-- "0..*" Empleado : empleados
+        Hospital *-- "0..*" Paciente : pacientes
+        Hospital *-- "0..*" CitaMedica : citas
+        
+        ' Asociacion entre CitaMedica, Paciente y Medico
+        Paciente "1" o-- "0..*" CitaMedica : citas
+        Medico "1" o-- "0..*" CitaMedica : citasAtendidas
+        CitaMedica --> "1" Paciente : paciente
+        CitaMedica --> "1" Medico : medico
+        
+        ' Dependencia
+        CitaMedica ..> EstadoCita
+        Enfermero ..> Turno
+        
+        Medico --> "0..1" Especialidad : especialidad
+        Diagnostico --> "1" Medico : emitidoPor
+        CitaMedica --> "0..1" Diagnostico : diagnostico
+
+@enduml
+
+                             
