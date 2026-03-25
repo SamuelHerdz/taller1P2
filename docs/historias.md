@@ -1,8 +1,5 @@
 # Historias de Usuario
 
-> "Desarrollar una aplicación Java que integre los siguientes conceptos de POO: Estructura y organización de clases, Constructores y sobrecarga, Encapsulamiento (Getters y Setters), Análisis de requisitos, Diagramas UML, Relaciones entre clases, Herencia, Polimorfismo, Clases Abstractas."  
-> "Historias de Usuario (Product Backlog)"
-
 | **ID** | **Historia** | **Prioridad** | **Story Points** |
 |:---:|:---|:---:|:---:|
 | HU-01 | Como **recepcionista**, quiero registrar pacientes con datos personales, historial clínico y grupo sanguíneo para mantener un historial médico digital. | Alta | 5 |
